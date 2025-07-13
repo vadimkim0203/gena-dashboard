@@ -1,4 +1,4 @@
-# 🧠 Gena Dashboard Frontend
+# Gena Dashboard Frontend
 
 This is the **Gena Dashboard** frontend project.
 
