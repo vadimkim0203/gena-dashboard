@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "docker:build": "docker build -t gena-frontend .",
+    "docker:run": "docker run -p 3000:3000 gena-frontend",
+    "docker:compose": "docker-compose up"
   },
   "dependencies": {
     "@heroui/spinner": "^2.2.19",
