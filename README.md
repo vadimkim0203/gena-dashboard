@@ -12,7 +12,7 @@ Follow these steps to run the frontend project locally or in a Docker container.
 
 ```bash
 git clone https://github.com/vadimkim0203/gena-dashboard.git
-cd gena-frontend
+cd gena-dashboard
 ```
 
 ---
