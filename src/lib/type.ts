@@ -1,3 +1,5 @@
+import { ChartType } from "./mockData";
+
 export interface Dashboard {
   id: string;
   name: string;
@@ -10,4 +12,10 @@ export interface EditableDashboardTitleProps {
 
 export interface NewDashboardButtonProps {
   onDashboardCreated?: () => void;
+}
+
+export interface NewChartDialogProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onSubmit: (data: { title: string; type: ChartType }) => void;
 }

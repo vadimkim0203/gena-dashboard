@@ -1,8 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { addDashboard, getDashboards } from '@/lib/mockStore';
+import {
+  addDashboard,
+  getDashboardById,
+  getDashboards,
+  updateDashboard,
+} from '@/lib/mockStore';
 
 export async function GET() {
-  return NextResponse.json(getDashboards());
+  try {
+    const dashboards = getDashboards();
+    return NextResponse.json(dashboards);
+  } catch (error) {
+    console.error('Error fetching dashboards:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch dashboards' },
+      { status: 500 },
+    );
+  }
 }
 
 export async function POST(request: NextRequest) {

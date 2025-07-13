@@ -1,4 +1,4 @@
-export type ChartType = 'number' | 'line' | 'bar';
+export type ChartType = 'number' | 'line' | 'bar' | 'pie';
 
 export interface Chart {
   id: string;
@@ -13,6 +13,10 @@ export interface Dashboard {
   id: string;
   name: string;
   charts: string[];
+}
+export interface ChartDataPoint {
+  label: string;
+  value: number;
 }
 
 export const dashboards: Dashboard[] = [
@@ -63,3 +67,18 @@ export interface Props {
 export interface DashboardPageProps {
   params: Promise<{ id: string }> | { id: string };
 }
+
+export const mockChartData = {
+  revenue: {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+    data: [30000, 45000, 42000, 50000, 63000, 70000],
+  },
+  users: {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+    data: [1000, 1500, 2200, 2800, 3500, 4200],
+  },
+  activeUsers: {
+    value: 3842,
+    change: +12.5,
+  },
+};

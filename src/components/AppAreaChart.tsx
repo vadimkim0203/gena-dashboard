@@ -8,7 +8,7 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from '@/components/ui/chart';
-import { Props } from '@/lib/mockData';
+import { ChartDataPoint, mockChartData, Props } from '@/lib/mockData';
 import { useEffect, useState } from 'react';
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 
@@ -24,17 +24,59 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 const AppAreaChart = ({ title, endpoint }: Props) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<ChartDataPoint[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetch(endpoint)
-      .then((res) => res.json())
-      .then(setData);
+ useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(endpoint);
+        if (!res.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        
+        const jsonData = await res.json();
+        
+        // If API fails, use mock data based on endpoint
+        if (!jsonData || !Array.isArray(jsonData)) {
+          // Transform mock data to match ChartDataPoint structure
+          let mockData: ChartDataPoint[] = [];
+          
+          if (endpoint.includes('revenue')) {
+            mockData = mockChartData.revenue.labels.map((label, i) => ({
+              label,
+              value: mockChartData.revenue.data[i]
+            }));
+          } else if (endpoint.includes('users')) {
+            mockData = mockChartData.users.labels.map((label, i) => ({
+              label,
+              value: mockChartData.users.data[i]
+            }));
+          } else {
+            // Default mock data if endpoint doesn't match
+            mockData = mockChartData.revenue.labels.map((label, i) => ({
+              label,
+              value: mockChartData.revenue.data[i]
+            }));
+          }
+          
+          setData(mockData);
+          return;
+        }
+        
+        setData(jsonData);
+      } catch (err) {
+        console.error('Error fetching chart data:', err);
+        setError('Failed to load chart data');
+      }
+    };
+
+    fetchData();
   }, [endpoint]);
 
   return (
     <div className="">
-      <h1 className="text-lg font-medium mb-6">Orders Over Time</h1>
+      <h1 className="text-lg font-medium mb-6">{title}</h1>
       <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
         <AreaChart accessibilityLayer data={data}>
           <CartesianGrid vertical={false} />

@@ -34,7 +34,7 @@ const AppBarChart = ({ title, endpoint }: Props) => {
 
   return (
     <div className="">
-      <h1 className="text-lg font-medium mb-6">Total Revenue</h1>
+      <h1 className="text-lg font-medium mb-6">{title}</h1>
       <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
         <BarChart accessibilityLayer data={data}>
           <CartesianGrid vertical={false} />

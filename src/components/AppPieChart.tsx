@@ -8,6 +8,8 @@ import {
   ChartTooltipContent,
 } from './ui/chart';
 import { Label, Pie, PieChart } from 'recharts';
+import { Props } from '@/lib/mockData';
+import { useEffect, useState } from 'react';
 
 const chartData = [
   { browser: 'chrome', visitors: 275, fill: 'var(--color-chrome)' },
@@ -43,12 +45,23 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const AppPieChart = () => {
-  const signUps = chartData.reduce((acc, cur) => acc + cur.visitors, 0);
+const AppPieChart = ({ title, endpoint }: Props) => {
+  const [data, setData] = useState(chartData);
+  const signUps = data.reduce((acc, cur) => acc + cur.visitors, 0);
+
+  useEffect(() => {
+    fetch(endpoint)
+      .then((res) => res.json())
+      .then(setData)
+      .catch((error) => {
+        console.error('Error fetching pie chart data:', error);
+        // Keep using mock data if fetch fails
+      });
+  }, [endpoint]);
 
   return (
     <div className="">
-      <h1 className="text-lg font-medium mb-6">Sign ups by region</h1>
+      <h1 className="text-lg font-medium mb-6">{title}</h1>
       <ChartContainer
         config={chartConfig}
         className="mx-auto aspect-square max-h-[250px]"
