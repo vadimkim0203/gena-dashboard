@@ -8,6 +8,33 @@ import {
 let dashboardStore = [...initialDashboards];
 let chartStore = [...initialCharts];
 
+const initializeStore = () => {
+  if (typeof window !== 'undefined') {
+    const savedDashboards = localStorage.getItem('dashboards');
+    const savedCharts = localStorage.getItem('charts');
+
+    if (savedDashboards) {
+      dashboardStore = JSON.parse(savedDashboards);
+    }
+
+    if (savedCharts) {
+      chartStore = JSON.parse(savedCharts);
+    }
+
+    console.log('Store initialized from localStorage:', {
+      dashboards: dashboardStore.length,
+      charts: chartStore.length,
+    });
+  }
+};
+initializeStore();
+
+const persistStore = () => {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('dashboards', JSON.stringify(dashboardStore));
+    localStorage.setItem('charts', JSON.stringify(chartStore));
+  }
+};
 export const getDashboards = () => dashboardStore;
 
 export const getDashboardById = (id: string) => {
@@ -17,6 +44,7 @@ export const getDashboardById = (id: string) => {
 
 export const addDashboard = (dashboard: Dashboard) => {
   dashboardStore.push(dashboard);
+  persistStore();
   return dashboard;
 };
 
@@ -37,36 +65,43 @@ export const updateDashboard = (id: string, data: Partial<Dashboard>) => {
 
   Object.assign(dashboard, data);
   console.log('Updated dashboard:', dashboard);
+  persistStore();
   return dashboard;
 };
 
 export const deleteDashboard = (id: string) => {
   dashboardStore = dashboardStore.filter((d) => d.id !== id);
+  persistStore();
 };
 
 export const getCharts = (): Chart[] => chartStore;
 
 export const addChart = (chart: Chart) => {
   try {
-    // Add chart to chart store
     chartStore.push(chart);
 
-    // Get the dashboard and update its charts array
-    const dashboard = getDashboardById(chart.dashboardId);
+    let dashboard = getDashboardById(chart.dashboardId);
+
     if (!dashboard) {
-      throw new Error(`Dashboard ${chart.dashboardId} not found`);
+      console.log(`Creating dashboard for chart: ${chart.dashboardId}`);
+      dashboard = {
+        id: chart.dashboardId,
+        name: 'New Dashboard',
+        charts: [],
+      };
+      dashboardStore.push(dashboard);
     }
 
     if (!dashboard.charts) {
       dashboard.charts = [];
     }
 
-    // Add chart reference to dashboard
     dashboard.charts.push(chart.id);
 
-    // Update the dashboard
     updateDashboard(dashboard.id, dashboard);
 
+    console.log(`Chart ${chart.id} added to dashboard ${dashboard.id}`);
+    persistStore();
     return chart;
   } catch (error) {
     console.error('Error adding chart:', error);
@@ -97,6 +132,7 @@ export const deleteChart = (chartId: string) => {
       dashboard.charts = dashboard.charts.filter((id) => id !== chartId);
       updateDashboard(dashboard.id, dashboard);
     }
+    persistStore();
 
     return true;
   } catch (error) {

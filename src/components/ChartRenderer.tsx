@@ -1,28 +1,3 @@
-// import { Chart } from '@/lib/mockData';
-// import AppBarChart from './AppBarChart';
-// import AppAreaChart from './AppAreaChart';
-// import AppPieChart from './AppPieChart';
-// import CardList from './CardList';
-
-// export default function ChartRenderer({ chart }: { chart: Chart }) {
-//   switch (chart.type) {
-//     case 'bar':
-//       return <AppBarChart title={chart.title} endpoint="/api/data/revenue" />;
-//     case 'line':
-//       return <AppAreaChart title={chart.title} endpoint={chart.dataEndpoint} />;
-//     case 'number':
-//       return <CardList title={chart.title} endpoint={chart.dataEndpoint} />;
-//     case 'pie':
-//       return <AppPieChart title={chart.title} endpoint={chart.dataEndpoint} />;
-//     default:
-//       return (
-//         <div className="p-4 text-red-500">
-//           Unsupported chart type: {chart.type}
-//         </div>
-//       );
-//   }
-// }
-
 'use client';
 
 import { Trash2 } from 'lucide-react';
@@ -32,8 +7,8 @@ import { useState } from 'react';
 import { Chart } from '@/lib/mockData';
 import AppBarChart from './AppBarChart';
 import AppAreaChart from './AppAreaChart';
-import CardList from './CardList';
 import AppPieChart from './AppPieChart';
+import TotalRevenueCard from './TotalRevenueChart';
 
 interface ChartRendererProps {
   chart: Chart;
@@ -80,7 +55,6 @@ export default function ChartRenderer({ chart }: ChartRendererProps) {
           <Trash2 className="h-4 w-4" />
         </Button>
       </div>
-      {/* Existing chart rendering logic */}
       <div className="w-full h-full">{renderChart(chart)}</div>
     </div>
   );
@@ -93,7 +67,9 @@ function renderChart(chart: Chart) {
     case 'line':
       return <AppAreaChart title={chart.title} endpoint={chart.dataEndpoint} />;
     case 'number':
-      return <CardList title={chart.title} endpoint={chart.dataEndpoint} />;
+      return (
+        <TotalRevenueCard title={chart.title} endpoint={chart.dataEndpoint} />
+      );
     case 'pie':
       return <AppPieChart title={chart.title} endpoint={chart.dataEndpoint} />;
     default:

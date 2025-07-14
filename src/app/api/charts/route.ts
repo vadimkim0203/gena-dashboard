@@ -1,10 +1,5 @@
 import { charts } from '@/lib/mockData';
-import {
-  addChart,
-  deleteChart,
-  getDashboardById,
-  updateDashboard,
-} from '@/lib/mockStore';
+import { addChart, deleteChart } from '@/lib/mockStore';
 import { NextRequest, NextResponse } from 'next/server';
 
 let chartStore = charts;
@@ -17,13 +12,12 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    // Create new chart with unique ID
     const newChart = {
       id: `chart-${Date.now()}`,
       dashboardId: body.dashboardId,
       type: body.type,
       title: body.title,
-      dataEndpoint: body.dataEndpoint || '/api/data/default',
+      dataEndpoint: body.dataEndpoint || `/api/data/${body.type}`,
       order: body.order || Date.now(),
     };
 
@@ -33,7 +27,10 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Error creating chart:', error);
     return NextResponse.json(
-      { error: 'Failed to create chart' },
+      {
+        error:
+          error instanceof Error ? error.message : 'Failed to create chart',
+      },
       { status: 500 },
     );
   }

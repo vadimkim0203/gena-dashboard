@@ -1,6 +1,6 @@
 'use client';
 
-import { Divide, TrendingUp } from 'lucide-react';
+import { TrendingUp } from 'lucide-react';
 import {
   ChartConfig,
   ChartContainer,
@@ -52,10 +52,16 @@ const AppPieChart = ({ title, endpoint }: Props) => {
   useEffect(() => {
     fetch(endpoint)
       .then((res) => res.json())
-      .then(setData)
+      .then((apiData) => {
+        const transformedData = apiData.map((item: any) => ({
+          ...item,
+          browser: item.browser.toLowerCase(),
+          fill: `var(--color-${item.browser.toLowerCase()})`,
+        }));
+        setData(transformedData);
+      })
       .catch((error) => {
         console.error('Error fetching pie chart data:', error);
-        // Keep using mock data if fetch fails
       });
   }, [endpoint]);
 
@@ -72,7 +78,7 @@ const AppPieChart = ({ title, endpoint }: Props) => {
             content={<ChartTooltipContent hideLabel />}
           />
           <Pie
-            data={chartData}
+            data={data}
             dataKey="visitors"
             nameKey="browser"
             innerRadius={60}

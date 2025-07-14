@@ -38,7 +38,7 @@ export const charts: Chart[] = [
     dashboardId: 'dashboard-1',
     type: 'bar',
     title: 'Signups by Region',
-    dataEndpoint: '/api/data/signups',
+    dataEndpoint: '/api/data/signups_by_region',
     order: 0,
   },
   {
@@ -46,7 +46,7 @@ export const charts: Chart[] = [
     dashboardId: 'dashboard-1',
     type: 'number',
     title: 'Total Revenue',
-    dataEndpoint: '/api/data/revenue',
+    dataEndpoint: '/api/data/total_revenue',
     order: 1,
   },
   {
@@ -54,7 +54,7 @@ export const charts: Chart[] = [
     dashboardId: 'dashboard-2',
     type: 'line',
     title: 'Orders Over Time',
-    dataEndpoint: '/api/data/orders',
+    dataEndpoint: '/api/data/orders_over_time',
     order: 0,
   },
 ];
@@ -82,3 +82,9 @@ export const mockChartData = {
     change: +12.5,
   },
 };
+
+export interface RevenueData {
+  label: string;
+  value: number;
+}
+

@@ -40,10 +40,8 @@ export function NewChartDialog({
       setTitle('');
       setType('bar');
 
-      // Close dialog
       onOpenChange(false);
 
-      // Refresh the page to show new chart
       router.refresh();
     } catch (error) {
       console.error('Error creating chart:', error);
@@ -80,8 +78,8 @@ export function NewChartDialog({
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="bar">Bar Chart</SelectItem>
-                <SelectItem value="line">Line Chart</SelectItem>
-                <SelectItem value="number">Number</SelectItem>
+                <SelectItem value="line">Pie Chart</SelectItem>
+                <SelectItem value="number">Radial Chart</SelectItem>
               </SelectContent>
             </Select>
           </div>

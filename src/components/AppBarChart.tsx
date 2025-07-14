@@ -8,7 +8,7 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from '@/components/ui/chart';
-import { Props } from '@/lib/mockData';
+import { ChartDataPoint, Props } from '@/lib/mockData';
 import { useEffect, useState } from 'react';
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 
@@ -24,12 +24,15 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 const AppBarChart = ({ title, endpoint }: Props) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<ChartDataPoint[]>([]);
 
   useEffect(() => {
     fetch(endpoint)
       .then((res) => res.json())
-      .then(setData);
+      .then(setData)
+      .catch((error: unknown) =>
+        console.error('Error fetching bar chart data:', error)
+      );
   }, [endpoint]);
 
   return (
@@ -49,7 +52,6 @@ const AppBarChart = ({ title, endpoint }: Props) => {
           <ChartTooltip content={<ChartTooltipContent />} />
           <ChartLegend content={<ChartLegendContent />} />
           <Bar dataKey="value" fill="var(--color-desktop)" radius={4} />
-          <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
         </BarChart>
       </ChartContainer>
     </div>

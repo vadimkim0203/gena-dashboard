@@ -1,15 +1,10 @@
-import AppAreaChart from '@/components/AppAreaChart';
-import AppBarChart from '@/components/AppBarChart';
-import CardList from '@/components/CardList';
 import ChartRenderer from '@/components/ChartRenderer';
 import NewChartButton from '@/components/NewChartButton';
-import { Chart, Dashboard } from '@/lib/mockData';
 import {
   getDashboardById,
   getChartsForDashboard,
   updateDashboard,
 } from '@/lib/mockStore';
-import { notFound } from 'next/navigation';
 
 interface DashboardPageProps {
   params: Promise<{ id: string }> | { id: string };

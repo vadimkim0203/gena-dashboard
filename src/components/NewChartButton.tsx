@@ -24,7 +24,7 @@ const NewChartButton = ({ dashboardId }: { dashboardId: string }) => {
           dashboardId,
           type: data.type,
           title: data.title,
-          dataEndpoint: `/api/data/${data.type}`, // endpoint based on chart type
+          dataEndpoint: `/api/data/${data.type}`, 
           order: Date.now(),
         }),
       });

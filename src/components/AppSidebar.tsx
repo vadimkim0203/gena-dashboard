@@ -25,9 +25,6 @@ import {
   SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
   SidebarSeparator,
 } from './ui/sidebar';
 import Link from 'next/link';
@@ -38,13 +35,10 @@ import {
   DropdownMenuTrigger,
 } from './ui/dropdown-menu';
 import { DropdownMenuContent } from '@radix-ui/react-dropdown-menu';
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from './ui/collapsible';
+import { Collapsible, CollapsibleContent } from './ui/collapsible';
 import DashboardList from './DashboardList';
 import NewDashboardButton from './NewDashboardButton';
+
 const items = [
   {
     title: 'Home',
