@@ -2,12 +2,9 @@
 
 import {
   Calendar,
-  ChevronDown,
   ChevronUp,
   Home,
   Inbox,
-  Plus,
-  Projector,
   Search,
   Settings,
   User2,
@@ -17,7 +14,6 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
-  SidebarGroupAction,
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarHeader,
@@ -80,6 +76,8 @@ const AppSidebar = () => {
                   alt="gena logo"
                   width={90}
                   height={30}
+                  className="h-auto w-auto"
+                  priority
                 />
               </Link>
             </SidebarMenuButton>

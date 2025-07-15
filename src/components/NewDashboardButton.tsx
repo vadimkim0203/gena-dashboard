@@ -24,7 +24,6 @@ const NewDashboardButton = () => {
       const newDashboard = await res.json();
       triggerRefresh();
       router.push(`/dashboards/${newDashboard.id}`);
-      // router.refresh();
     } catch (error) {
       console.error('Error creating dashboard:', error);
     }

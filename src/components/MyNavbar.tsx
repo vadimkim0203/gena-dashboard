@@ -7,15 +7,9 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Button } from './ui/button';
@@ -31,7 +25,6 @@ const MyNavbar = ({ ...children }) => {
 
   return (
     <nav className="p-4 flex items-center justify-between ">
-      {/* LEFT */}
       <SidebarTrigger />
       <div className="flex items-center gap-4">
         <Link href="/"></Link>
@@ -55,7 +48,6 @@ const MyNavbar = ({ ...children }) => {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Avatar className="ring-0 focus-visible:ring-0 focus:ring-0 focus:outline-none ">
@@ -83,7 +75,6 @@ const MyNavbar = ({ ...children }) => {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        {/* burger menu */}
         <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
           <DropdownMenuTrigger asChild className="border-none">
             <Button

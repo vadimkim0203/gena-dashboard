@@ -4,7 +4,7 @@ This is the **Gena Dashboard** frontend project.
 
 ## Getting Started
 
-Follow these steps to run the frontend project locally or in a Docker container.
+Follow these steps to run the frontend project locally.
 
 ---
 
@@ -17,68 +17,36 @@ cd gena-dashboard
 
 ---
 
-## Docker Setup
+## Local Development Setup
 
-### 1. Create a `Dockerfile`
-
-```Dockerfile
-FROM node:18-alpine
-
-WORKDIR /app
-
-# Install dependencies first for better caching
-COPY package*.json ./
-RUN npm install
-
-# Copy the rest of the application
-COPY . .
-
-# Build the application
-RUN npm run build
-
-# Expose port 3000
-EXPOSE 3000
-
-# Start the application
-CMD ["npm", "start"]
-```
-
----
-
-### 2. Create a `docker-compose.yml`
-
-```yaml
-version: '3.8'
-services:
-  web:
-    build: .
-    ports:
-      - "3000:3000"
-    environment:
-      - NODE_ENV=production
-```
-
----
-
-### 3. Build and Start with Docker Compose
+### 1. Install Dependencies
 
 ```bash
-docker-compose up --build
+npm install
 ```
 
-Alternatively, if you’ve set up an NPM script:
+### 2. Start the Development Server
 
 ```bash
-npm run docker:compose
+npm run dev
 ```
+
+This will start the development server on [http://localhost:3000](http://localhost:3000).
 
 ---
 
-## 🛠 Technologies Used
+## Production Build
 
-- [Next.js](https://nextjs.org/)
-- [React](https://react.dev/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [ShadCN UI](https://ui.shadcn.dev/)
-- [Lucide Icons](https://lucide.dev/icons)
-- TypeScript
+If you want to build the application for production:
+
+### 1. Create a Production Build
+
+```bash
+npm run build
+```
+
+### 2. Start the Production Server
+
+```bash
+npm start
+```

@@ -27,24 +27,6 @@ const AppAreaChart = ({ title, endpoint }: Props) => {
   const [data, setData] = useState<ChartDataPoint[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const res = await fetch(endpoint);
-  //       if (!res.ok) throw new Error('Failed to fetch data');
-  //       const jsonData = await res.json();
-  //       if (!jsonData || !Array.isArray(jsonData)) {
-  //       } else {
-  //         setData(jsonData);
-  //       }
-  //     } catch (error: unknown) {
-  //       console.error('Error fetching chart data:', error);
-  //       setError('Failed to load chart data');
-  //     }
-  //   };
-  //   fetchData();
-  // }, [endpoint]);
-
   useEffect(() => {
     const fetchData = async () => {
       try {

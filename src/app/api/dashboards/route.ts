@@ -1,10 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import {
-  addDashboard,
-  getDashboardById,
-  getDashboards,
-  updateDashboard,
-} from '@/lib/mockStore';
+import { addDashboard, getDashboards } from '@/lib/mockStore';
 
 export async function GET() {
   try {

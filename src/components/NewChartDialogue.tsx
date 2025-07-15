@@ -14,9 +14,11 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
-import { NewChartDialogProps } from '@/lib/type';
+
 import { ChartType } from '@/lib/mockData';
 import { useRouter } from 'next/navigation';
+import { NewChartDialogProps } from '@/lib/type';
+import { getEndpointForChartType } from '@/lib/mockStore';
 
 export function NewChartDialog({
   open,
@@ -33,15 +35,11 @@ export function NewChartDialog({
     setIsSubmitting(true);
 
     try {
-     
-      await onSubmit({ title, type });
-
-   
+      const dataEndpoint = getEndpointForChartType(type);
+      await onSubmit({ title, type, dataEndpoint });
       setTitle('');
       setType('bar');
-
       onOpenChange(false);
-
       router.refresh();
     } catch (error) {
       console.error('Error creating chart:', error);
@@ -78,7 +76,8 @@ export function NewChartDialog({
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="bar">Bar Chart</SelectItem>
-                <SelectItem value="line">Pie Chart</SelectItem>
+                <SelectItem value="line">Line Chart</SelectItem>
+                <SelectItem value="pie">Pie Chart</SelectItem>
                 <SelectItem value="number">Radial Chart</SelectItem>
               </SelectContent>
             </Select>

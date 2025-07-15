@@ -1,5 +1,5 @@
 import { charts } from '@/lib/mockData';
-import { addChart, deleteChart } from '@/lib/mockStore';
+import { addChart, deleteChart, getEndpointForChartType } from '@/lib/mockStore';
 import { NextRequest, NextResponse } from 'next/server';
 
 let chartStore = charts;
@@ -12,12 +12,14 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
+    const fallbackEndpoint = getEndpointForChartType(body.type);
+
     const newChart = {
       id: `chart-${Date.now()}`,
       dashboardId: body.dashboardId,
       type: body.type,
       title: body.title,
-      dataEndpoint: body.dataEndpoint || `/api/data/${body.type}`,
+      dataEndpoint: body.dataEndpoint || fallbackEndpoint,
       order: body.order || Date.now(),
     };
 

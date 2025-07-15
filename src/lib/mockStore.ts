@@ -1,5 +1,6 @@
 import {
   Chart,
+  ChartType,
   Dashboard,
   charts as initialCharts,
   dashboards as initialDashboards,
@@ -59,12 +60,10 @@ export const updateDashboard = (id: string, data: Partial<Dashboard>) => {
       ...data,
     };
     dashboardStore.push(dashboard);
-    console.log('Created new dashboard:', dashboard);
     return dashboard;
   }
 
   Object.assign(dashboard, data);
-  console.log('Updated dashboard:', dashboard);
   persistStore();
   return dashboard;
 };
@@ -138,5 +137,21 @@ export const deleteChart = (chartId: string) => {
   } catch (error) {
     console.error('Error deleting chart:', error);
     return false;
+  }
+};
+
+export const getEndpointForChartType = (type: ChartType): string => {
+  switch (type) {
+    case 'bar':
+      return '/api/data/product_performance';
+    case 'line':
+      return '/api/data/orders_over_time';
+    case 'pie':
+      return '/api/data/total_visitors';
+    case 'number':
+      return '/api/data/total_revenue';
+    default:
+      console.warn(`No endpoint defined for chart type: ${type}`);
+      return '';
   }
 };

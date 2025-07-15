@@ -3,7 +3,6 @@
 import { Props } from '@/lib/mockData';
 import { Badge } from './ui/badge';
 import { Card, CardContent, CardFooter, CardTitle } from './ui/card';
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { UserRound } from 'lucide-react';
 

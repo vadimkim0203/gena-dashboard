@@ -153,6 +153,3 @@ const DashboardList = () => {
 };
 
 export default DashboardList;
-function handleClick() {
-  throw new Error('Function not implemented.');
-}

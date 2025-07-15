@@ -17,5 +17,5 @@ export interface NewDashboardButtonProps {
 export interface NewChartDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSubmit: (data: { title: string; type: ChartType }) => void;
+  onSubmit: (data: { title: string; type: ChartType; dataEndpoint: string }) => Promise<void> | void;
 }
