@@ -34,6 +34,7 @@ import { DropdownMenuContent } from '@radix-ui/react-dropdown-menu';
 import { Collapsible, CollapsibleContent } from './ui/collapsible';
 import DashboardList from './DashboardList';
 import NewDashboardButton from './NewDashboardButton';
+import Logo from './Logo';
 
 const items = [
   {
@@ -71,14 +72,7 @@ const AppSidebar = () => {
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
               <Link href="/">
-                <Image
-                  src="/genaLogo.svg"
-                  alt="gena logo"
-                  width={90}
-                  height={30}
-                  className="h-auto w-auto"
-                  priority
-                />
+                <Logo />
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>

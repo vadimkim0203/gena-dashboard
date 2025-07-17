@@ -16,13 +16,16 @@ import {
 import { JSX, useState } from 'react';
 import { SortableContext, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { cn } from '@/lib/utils';
 
 const SortableItem = ({
   id,
   component,
+  isDragging,
 }: {
   id: string;
   component: JSX.Element;
+  isDragging: boolean;
 }) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
@@ -38,7 +41,10 @@ const SortableItem = ({
       style={style}
       {...attributes}
       {...listeners}
-      className="bg-primary-foreground p-4 rounded-lg"
+      className={cn(
+        'bg-primary-foreground p-4 rounded-lg',
+        isDragging ? 'cursor-grabbing' : 'cursor-grab',
+      )}
     >
       {component}
     </div>
@@ -126,6 +132,7 @@ const Homepage = () => {
               key={item.id}
               component={item.component}
               id={item.id}
+              isDragging={activeId === item.id}
             />
           ))}
         </div>

@@ -50,3 +50,26 @@ npm run build
 ```bash
 npm start
 ```
+
+---
+
+## Technologies Used
+
+### Core Technologies
+- **Next.js 14** - Providing server-side rendering and API routes
+- **TypeScript** - For type-safe code
+- **Tailwind CSS** - For styling and responsive design
+
+### UI Components & Design
+- **shadcn/ui** - For pre-built components and theme switching
+- **Lucide Icons** - For customizable icons
+- **Recharts** - For responsive and interactive data visualization
+
+### Functionality & Features
+- **@dnd-kit** - For drag-and-drop functionality
+- **Next.js App Router** - For routing and layouts
+
+### State Management & Data Handling
+- **React Hooks** - For component state
+- **Next.js API Routes** - For API functionality
+- **localStorage** - For persisting charts and dashboards simultaneously
