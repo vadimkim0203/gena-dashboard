@@ -114,7 +114,7 @@ const Homepage = () => {
     });
   };
 
-  const handleDragEnd = (e: DragEndEvent) => {
+  const handleDragEnd = () => {
     setActiveId(null);
   };
 

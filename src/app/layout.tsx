@@ -6,7 +6,6 @@ import MyNavbar from '@/components/MyNavbar';
 import { ThemeProvider } from '../components/providers/ThemeProvider';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { cookies } from 'next/headers';
-import Homepage from './page';
 import { DashboardProvider } from '@/lib/DashboardContext';
 
 const geistSans = Geist({

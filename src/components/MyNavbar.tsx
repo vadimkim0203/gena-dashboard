@@ -15,12 +15,11 @@ import {
 import { Button } from './ui/button';
 import { useState } from 'react';
 import { useTheme } from 'next-themes';
-import { SidebarTrigger, useSidebar } from './ui/sidebar';
+import { SidebarTrigger } from './ui/sidebar';
 
-const MyNavbar = ({ ...children }) => {
+const MyNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { setTheme, theme } = useTheme();
-  const { toggleSidebar } = useSidebar();
   const hamburgerColor = theme === 'dark' ? '#fff' : '#000';
 
   return (

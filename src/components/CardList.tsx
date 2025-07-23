@@ -85,13 +85,6 @@ const latestTransactions = [
 const CardList = ({ title, endpoint }: Props) => {
   const list =
     title === 'Popular content' ? popularContent : latestTransactions;
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    fetch(endpoint)
-      .then((res) => res.json())
-      .then(setData);
-  }, [endpoint]);
 
   return (
     <div>

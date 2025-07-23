@@ -54,17 +54,9 @@ export function AppStackedChart({ endpoint }: Props) {
         if (!res.ok) {
           throw new Error('Failed to fetch chart data');
         }
-        const data = await res.json();
-
-        const transformedData = data.map((item: any, index: number) => ({
-          month: item.product,
-          desktop: item.sales * 0.6,
-          mobile: item.sales * 0.3,
-          other: item.sales * 0.1,
-        }));
-
-        setChartData(transformedData);
-      } catch (err: unknown) {
+        const data: ProductPerformanceChartData[] = await res.json();
+        setChartData(data);
+      } catch (err) {
         console.error('Error fetching chart data:', err);
         setError('Failed to load chart data');
       } finally {
@@ -73,6 +65,13 @@ export function AppStackedChart({ endpoint }: Props) {
     };
     fetchData();
   }, [endpoint]);
+
+  const transformedData = chartData.map((item) => ({
+    month: item.product,
+    desktop: item.sales * 0.6,
+    mobile: item.sales * 0.3,
+    other: item.sales * 0.1,
+  }));
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div className="text-red-500">{error}</div>;
@@ -90,7 +89,7 @@ export function AppStackedChart({ endpoint }: Props) {
         <ChartContainer config={chartConfig}>
           <AreaChart
             accessibilityLayer
-            data={chartData}
+            data={transformedData}
             margin={{
               left: 12,
               right: 12,

@@ -25,7 +25,6 @@ const chartConfig = {
 
 const AppAreaChart = ({ title, endpoint }: Props) => {
   const [data, setData] = useState<ChartDataPoint[]>([]);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,8 +62,6 @@ const AppAreaChart = ({ title, endpoint }: Props) => {
         }
       } catch (error: unknown) {
         console.error('Error fetching chart data:', error);
-        setError('Failed to load chart data');
-
         const fallbackData = [
           { label: 'Jan', value: 30 },
           { label: 'Feb', value: 45 },

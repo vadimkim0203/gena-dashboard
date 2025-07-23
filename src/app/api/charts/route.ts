@@ -1,8 +1,12 @@
 import { charts } from '@/lib/mockData';
-import { addChart, deleteChart, getEndpointForChartType } from '@/lib/mockStore';
+import {
+  addChart,
+  deleteChart,
+  getEndpointForChartType,
+} from '@/lib/mockStore';
 import { NextRequest, NextResponse } from 'next/server';
 
-let chartStore = charts;
+const chartStore = charts;
 
 export async function GET() {
   return NextResponse.json(chartStore);
@@ -51,7 +55,7 @@ export async function DELETE(
     }
 
     return NextResponse.json({ message: 'Chart deleted' });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Failed to delete chart' },
       { status: 500 },

@@ -19,3 +19,9 @@ export interface NewChartDialogProps {
   onOpenChange: (open: boolean) => void;
   onSubmit: (data: { title: string; type: ChartType; dataEndpoint: string }) => Promise<void> | void;
 }
+
+export type PieChartData = {
+  browser: string;
+  visitors: number;
+  fill: string;
+};

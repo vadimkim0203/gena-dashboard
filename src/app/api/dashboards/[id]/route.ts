@@ -6,8 +6,6 @@ import {
 } from '@/lib/mockStore';
 import { NextRequest, NextResponse } from 'next/server';
 
-let dashboardStore = [...dashboards];
-
 export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } },

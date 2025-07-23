@@ -27,12 +27,10 @@ export function NewChartDialog({
 }: NewChartDialogProps) {
   const [title, setTitle] = useState('');
   const [type, setType] = useState<ChartType>('bar');
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
 
     try {
       const dataEndpoint = getEndpointForChartType(type);
@@ -45,7 +43,6 @@ export function NewChartDialog({
       console.error('Error creating chart:', error);
       alert('Failed to create chart. Please try again.');
     } finally {
-      setIsSubmitting(false);
     }
   };
 

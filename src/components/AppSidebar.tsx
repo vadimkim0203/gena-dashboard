@@ -24,7 +24,6 @@ import {
   SidebarSeparator,
 } from './ui/sidebar';
 import Link from 'next/link';
-import Image from 'next/image';
 import {
   DropdownMenu,
   DropdownMenuItem,
@@ -72,7 +71,9 @@ const AppSidebar = () => {
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
               <Link href="/">
-                <Logo />
+                <span>
+                  <Logo />
+                </span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>

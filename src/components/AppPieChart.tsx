@@ -10,6 +10,7 @@ import {
 import { Label, Pie, PieChart } from 'recharts';
 import { Props } from '@/lib/mockData';
 import { useEffect, useState } from 'react';
+import { PieChartData } from '@/lib/type';
 
 const chartData = [
   { browser: 'chrome', visitors: 275, fill: 'var(--color-chrome)' },
@@ -46,13 +47,13 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 const AppPieChart = ({ title, endpoint }: Props) => {
-  const [data, setData] = useState(chartData);
+  const [data, setData] = useState<PieChartData[]>(chartData);
   const signUps = data.reduce((acc, cur) => acc + cur.visitors, 0);
 
   useEffect(() => {
     fetch(endpoint)
       .then((res) => res.json())
-      .then((apiData) => {
+      .then((apiData: PieChartData[]) => {
         const transformedData = apiData.map((item: any) => ({
           ...item,
           browser: item.browser.toLowerCase(),
