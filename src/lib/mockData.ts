@@ -14,9 +14,24 @@ export interface Dashboard {
   name: string;
   charts: string[];
 }
+
 export interface ChartDataPoint {
   label: string;
   value: number;
+}
+
+export interface RevenueData {
+  label: string;
+  value: number;
+}
+
+export interface Props {
+  title?: string;
+  endpoint: string;
+}
+
+export interface DashboardPageProps {
+  params: { id: string } | Promise<{ id: string }>;
 }
 
 export const dashboards: Dashboard[] = [
@@ -59,15 +74,6 @@ export const charts: Chart[] = [
   },
 ];
 
-export interface Props {
-  title?: string;
-  endpoint: string;
-}
-
-export interface DashboardPageProps {
-  params: Promise<{ id: string }> | { id: string };
-}
-
 export const mockChartData = {
   revenue: {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
@@ -82,9 +88,3 @@ export const mockChartData = {
     change: +12.5,
   },
 };
-
-export interface RevenueData {
-  label: string;
-  value: number;
-}
-

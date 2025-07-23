@@ -1,56 +1,54 @@
-import { dashboards } from '@/lib/mockData';
-import {
-  deleteDashboard,
-  getDashboardById,
-  updateDashboard,
-} from '@/lib/mockStore';
 import { NextRequest, NextResponse } from 'next/server';
+import { Dashboard, dashboards } from '@/lib/mockData';
+import { deleteDashboard } from '@/lib/mockStore';
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } },
-) {
-  const { id } = await Promise.resolve(params);
-  const dashboard = getDashboardById(id);
+const dashboardStore: Dashboard[] = [...dashboards];
+
+function getIdFromRequest(request: NextRequest) {
+  const url = new URL(request.url);
+  const segments = url.pathname.split('/');
+  return segments[segments.length - 1];
+}
+
+export async function GET(request: NextRequest) {
+  const id = getIdFromRequest(request);
+  const dashboard = dashboardStore.find((d) => d.id === id);
 
   if (!dashboard) {
-    return NextResponse.json({ error: 'Not found' }, { status: 404 });
+    return NextResponse.json(
+      { message: 'Dashboard not found' },
+      { status: 404 },
+    );
   }
-
   return NextResponse.json(dashboard);
 }
 
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: { id: string } },
-) {
-  try {
-    const { id } = await Promise.resolve(params);
-    const data = await request.json();
+export async function PUT(request: NextRequest) {
+  const id = getIdFromRequest(request);
+  const body = await request.json();
 
-    const dashboard = updateDashboard(id, data);
-    if (!dashboard) {
-      return NextResponse.json(
-        { error: 'Failed to update dashboard' },
-        { status: 500 },
-      );
-    }
-
-    return NextResponse.json(dashboard);
-  } catch (error) {
-    console.error('Error updating dashboard:', error);
+  const index = dashboardStore.findIndex((d) => d.id === id);
+  if (index === -1) {
     return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 },
+      { message: 'Dashboard not found' },
+      { status: 404 },
     );
   }
+
+  dashboardStore[index] = { ...dashboardStore[index], ...body };
+  return NextResponse.json(dashboardStore[index]);
 }
 
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { id: string } },
-) {
-  const { id } = await Promise.resolve(params);
-  deleteDashboard(id);
-  return NextResponse.json({ message: 'Deleted' });
+export async function DELETE(request: NextRequest) {
+  const id = getIdFromRequest(request);
+  const success = deleteDashboard(id);
+
+  if (!success) {
+    return NextResponse.json(
+      { message: 'Dashboard not found' },
+      { status: 404 },
+    );
+  }
+
+  return NextResponse.json({ message: 'Dashboard deleted' });
 }

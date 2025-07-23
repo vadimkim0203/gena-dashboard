@@ -1,7 +1,6 @@
 import { charts } from '@/lib/mockData';
 import {
   addChart,
-  deleteChart,
   getEndpointForChartType,
 } from '@/lib/mockStore';
 import { NextRequest, NextResponse } from 'next/server';
@@ -37,27 +36,6 @@ export async function POST(request: NextRequest) {
         error:
           error instanceof Error ? error.message : 'Failed to create chart',
       },
-      { status: 500 },
-    );
-  }
-}
-
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { id: string } },
-) {
-  try {
-    const { id } = await Promise.resolve(params);
-    const success = deleteChart(id);
-
-    if (!success) {
-      return NextResponse.json({ error: 'Chart not found' }, { status: 404 });
-    }
-
-    return NextResponse.json({ message: 'Chart deleted' });
-  } catch {
-    return NextResponse.json(
-      { error: 'Failed to delete chart' },
       { status: 500 },
     );
   }

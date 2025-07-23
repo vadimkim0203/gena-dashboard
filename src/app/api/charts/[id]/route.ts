@@ -1,13 +1,17 @@
-import { charts } from '@/lib/mockData';
 import { NextRequest, NextResponse } from 'next/server';
+import { Chart, charts } from '@/lib/mockData';
+import { deleteChart } from '@/lib/mockStore';
 
-let chartStore = [...charts];
+const chartStore: Chart[] = [...charts];
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } },
-) {
-  const { id } = await Promise.resolve(params);
+function getIdFromRequest(request: NextRequest) {
+  const url = new URL(request.url);
+  const segments = url.pathname.split('/');
+  return segments[segments.length - 1];
+}
+
+export async function GET(request: NextRequest) {
+  const id = getIdFromRequest(request);
   const chart = chartStore.find((c) => c.id === id);
 
   if (!chart) {
@@ -16,14 +20,11 @@ export async function GET(
   return NextResponse.json(chart);
 }
 
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: { id: string } },
-) {
-  const { id } = await Promise.resolve(params);
+export async function PUT(request: NextRequest) {
+  const id = getIdFromRequest(request);
   const body = await request.json();
-  const index = chartStore.findIndex((c) => c.id === id);
 
+  const index = chartStore.findIndex((c) => c.id === id);
   if (index === -1) {
     return NextResponse.json({ message: 'Chart not found' }, { status: 404 });
   }
@@ -32,11 +33,14 @@ export async function PUT(
   return NextResponse.json(chartStore[index]);
 }
 
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { id: string } },
-) {
-  const { id } = await Promise.resolve(params);
-  chartStore = chartStore.filter((c) => c.id !== id);
+export async function DELETE(request: NextRequest) {
+  const id = getIdFromRequest(request);
+
+  const success = deleteChart(id);
+
+  if (!success) {
+    return NextResponse.json({ message: 'Chart not found' }, { status: 404 });
+  }
+
   return NextResponse.json({ message: 'Chart deleted' });
 }

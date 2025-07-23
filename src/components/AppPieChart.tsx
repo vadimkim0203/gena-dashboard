@@ -54,7 +54,7 @@ const AppPieChart = ({ title, endpoint }: Props) => {
     fetch(endpoint)
       .then((res) => res.json())
       .then((apiData: PieChartData[]) => {
-        const transformedData = apiData.map((item: any) => ({
+        const transformedData = apiData.map((item: PieChartData) => ({
           ...item,
           browser: item.browser.toLowerCase(),
           fill: `var(--color-${item.browser.toLowerCase()})`,

@@ -68,9 +68,16 @@ export const updateDashboard = (id: string, data: Partial<Dashboard>) => {
   return dashboard;
 };
 
-export const deleteDashboard = (id: string) => {
-  dashboardStore = dashboardStore.filter((d) => d.id !== id);
+export const deleteDashboard = (id: string): boolean => {
+  const index = dashboardStore.findIndex((d) => d.id === id);
+
+  if (index === -1) {
+    return false;
+  }
+
+  dashboardStore.splice(index, 1);
   persistStore();
+  return true;
 };
 
 export const getCharts = (): Chart[] => chartStore;

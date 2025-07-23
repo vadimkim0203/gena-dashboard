@@ -3,7 +3,6 @@
 import { Props } from '@/lib/mockData';
 import { Badge } from './ui/badge';
 import { Card, CardContent, CardFooter, CardTitle } from './ui/card';
-import { useEffect, useState } from 'react';
 import { UserRound } from 'lucide-react';
 
 const popularContent = [
@@ -82,7 +81,7 @@ const latestTransactions = [
   },
 ];
 
-const CardList = ({ title, endpoint }: Props) => {
+const CardList = ({ title }: Props) => {
   const list =
     title === 'Popular content' ? popularContent : latestTransactions;
 

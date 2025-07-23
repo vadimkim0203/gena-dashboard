@@ -34,7 +34,6 @@ import { Collapsible, CollapsibleContent } from './ui/collapsible';
 import DashboardList from './DashboardList';
 import NewDashboardButton from './NewDashboardButton';
 import Logo from './Logo';
-import { useState } from 'react';
 
 const items = [
   {

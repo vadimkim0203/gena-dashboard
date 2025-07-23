@@ -8,7 +8,6 @@ import CardList from '@/components/CardList';
 import {
   closestCorners,
   DndContext,
-  DragEndEvent,
   DragOverEvent,
   DragStartEvent,
   UniqueIdentifier,
