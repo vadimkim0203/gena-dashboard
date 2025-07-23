@@ -1,11 +1,22 @@
-import Link from 'next/link';
+'use client';
 
-const Logo = () => (
-  <Link href="/">
-    <div className="text-black dark:text-white w-[144px] h-[36px]">
+import { cn } from '@/lib/utils';
+import { useSidebar } from './ui/sidebar';
+
+const Logo = () => {
+  const { state } = useSidebar();
+  const collapsed = state === 'collapsed';
+  return (
+    <div
+      className={cn(
+        `text-black dark:text-white transition-all duration-300`,
+        collapsed ? 'w-[48px] h-[24px]' : 'w-[144px] h-[36px]',
+      )}
+    >
       <svg
-        width="144"
-        height="36"
+        width={collapsed ? 48 : 144}
+        height={collapsed ? 24 : 36}
+        className="transition-all duration-300"
         viewBox="0 0 144 36"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +40,7 @@ const Logo = () => (
         />
       </svg>
     </div>
-  </Link>
-);
+  );
+};
 
 export default Logo;

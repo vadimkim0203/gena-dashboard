@@ -34,6 +34,7 @@ import { Collapsible, CollapsibleContent } from './ui/collapsible';
 import DashboardList from './DashboardList';
 import NewDashboardButton from './NewDashboardButton';
 import Logo from './Logo';
+import { useState } from 'react';
 
 const items = [
   {
@@ -69,7 +70,7 @@ const AppSidebar = () => {
       <SidebarHeader className="py-4">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild>
+            <SidebarMenuButton asChild className="h-auto p-0 items-start">
               <Link href="/">
                 <span>
                   <Logo />
