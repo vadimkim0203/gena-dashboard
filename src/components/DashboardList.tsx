@@ -14,28 +14,27 @@ const DashboardList = () => {
   const router = useRouter();
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const { refreshKey } = useDashboardContext();
-  
-  useEffect(() => {
-    async function fetchDashboards() {
-      const res = await fetch('/api/dashboards');
-      if (res.ok) {
-        const data = await res.json();
-        setDashboards(data);
-      }
-    }
-    fetchDashboards();
-  }, [refreshKey]);
 
   useEffect(() => {
     async function fetchDashboards() {
-      const res = await fetch('/api/dashboards');
-      if (res.ok) {
+      try {
+        const res = await fetch('/api/dashboards');
+
+        if (!res.ok) {
+          const errorText = await res.text();
+          console.error(`Failed to fetch dashboards: ${res.status}`, errorText);
+          return;
+        }
+
         const data = await res.json();
         setDashboards(data);
+      } catch (error) {
+        console.error('Error fetching dashboards:', error);
       }
     }
+
     fetchDashboards();
-  }, []);
+  }, [refreshKey]);
 
   const handleRename = async (id: string) => {
     try {
@@ -47,9 +46,15 @@ const DashboardList = () => {
         body: JSON.stringify({ name: editName }),
       });
 
-      if (!res.ok) throw new Error('Failed to update dashboard');
+      const responseText = await res.text();
 
-      const updated = await res.json();
+      if (!res.ok) {
+        throw new Error(
+          `Failed to update dashboard: ${res.status} ${responseText}`,
+        );
+      }
+
+      const updated = responseText ? JSON.parse(responseText) : {};
 
       setDashboards((prev) =>
         prev.map((d) => (d.id === id ? { ...d, name: updated.name } : d)),
@@ -62,7 +67,9 @@ const DashboardList = () => {
       }
     } catch (error) {
       console.error('Error updating dashboard:', error);
-      alert('Failed to update dashboard name');
+      alert(
+        `Failed to update dashboard name: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      );
     }
   };
 

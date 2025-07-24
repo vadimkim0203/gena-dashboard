@@ -6,12 +6,12 @@ import {
   updateDashboard,
 } from '@/lib/mockStore';
 
-interface DashboardPageProps {
-  params: Promise<{ id: string }> | { id: string };
-}
-
-export default async function DashboardPage({ params }: DashboardPageProps) {
-  const { id } = await Promise.resolve(params);
+export default async function DashboardPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
 
   try {
     let dashboard = getDashboardById(id);

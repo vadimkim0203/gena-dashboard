@@ -1,4 +1,4 @@
-import { ChartType } from "./mockData";
+import { ChartType } from './mockData';
 
 export interface Dashboard {
   id: string;
@@ -17,7 +17,11 @@ export interface NewDashboardButtonProps {
 export interface NewChartDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSubmit: (data: { title: string; type: ChartType; dataEndpoint: string }) => Promise<void> | void;
+  onSubmit: (data: {
+    title: string;
+    type: ChartType;
+    dataEndpoint: string;
+  }) => Promise<void> | void;
 }
 
 export type PieChartData = {

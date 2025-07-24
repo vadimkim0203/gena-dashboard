@@ -21,11 +21,6 @@ const initializeStore = () => {
     if (savedCharts) {
       chartStore = JSON.parse(savedCharts);
     }
-
-    console.log('Store initialized from localStorage:', {
-      dashboards: dashboardStore.length,
-      charts: chartStore.length,
-    });
   }
 };
 initializeStore();
@@ -45,25 +40,6 @@ export const getDashboardById = (id: string) => {
 
 export const addDashboard = (dashboard: Dashboard) => {
   dashboardStore.push(dashboard);
-  persistStore();
-  return dashboard;
-};
-
-export const updateDashboard = (id: string, data: Partial<Dashboard>) => {
-  let dashboard = getDashboardById(id);
-
-  if (!dashboard) {
-    dashboard = {
-      id,
-      name: data.name || 'New Dashboard',
-      charts: [],
-      ...data,
-    };
-    dashboardStore.push(dashboard);
-    return dashboard;
-  }
-
-  Object.assign(dashboard, data);
   persistStore();
   return dashboard;
 };
@@ -161,4 +137,23 @@ export const getEndpointForChartType = (type: ChartType): string => {
       console.warn(`No endpoint defined for chart type: ${type}`);
       return '';
   }
+};
+
+export const getAllDashboards = (): Dashboard[] => {
+  initializeStore();
+  return dashboardStore;
+};
+
+export const updateDashboard = (
+  id: string,
+  updates: Partial<Dashboard>,
+): Dashboard | null => {
+  const index = dashboardStore.findIndex((d) => d.id === id);
+
+  if (index === -1) return null;
+
+  dashboardStore[index] = { ...dashboardStore[index], ...updates };
+  persistStore();
+
+  return dashboardStore[index];
 };
