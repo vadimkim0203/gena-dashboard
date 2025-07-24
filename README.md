@@ -2,6 +2,10 @@
 
 This is the **Gena Dashboard** frontend project.
 
+## Live Demo
+
+Check out the live demo: [https://gena-dashboard-jade.vercel.app/](https://gena-dashboard-jade.vercel.app/)
+
 ## Getting Started
 
 Follow these steps to run the frontend project locally.
