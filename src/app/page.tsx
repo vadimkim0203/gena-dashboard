@@ -77,7 +77,12 @@ const Homepage = () => {
     },
     {
       id: 'area-chart',
-      component: <AppAreaChart endpoint="/api/data/orders_over_time" />,
+      component: (
+        <AppAreaChart
+          title="Orders Over Time"
+          endpoint="/api/data/orders_over_time"
+        />
+      ),
     },
     {
       id: 'popular-content',

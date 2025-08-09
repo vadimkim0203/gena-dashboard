@@ -25,55 +25,20 @@ const chartConfig = {
 
 const AppAreaChart = ({ title, endpoint }: Props) => {
   const [data, setData] = useState<ChartDataPoint[]>([]);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(endpoint);
-        if (!res.ok) {
-          console.warn(`Failed to fetch from ${endpoint}, using fallback data`);
-          // Use fallback data instead of throwing error
-          const fallbackData = [
-            { label: 'Jan', value: 30 },
-            { label: 'Feb', value: 45 },
-            { label: 'Mar', value: 38 },
-            { label: 'Apr', value: 55 },
-            { label: 'May', value: 48 },
-            { label: 'Jun', value: 62 },
-          ];
-          setData(fallbackData);
-          return;
-        }
+    if (!endpoint) {
+      setError('No endpoint provided');
+      return;
+    }
 
-        const jsonData = await res.json();
-        if (!jsonData || !Array.isArray(jsonData)) {
-          console.warn('Invalid data format, using fallback data');
-          const fallbackData = [
-            { label: 'Jan', value: 30 },
-            { label: 'Feb', value: 45 },
-            { label: 'Mar', value: 38 },
-            { label: 'Apr', value: 55 },
-            { label: 'May', value: 48 },
-            { label: 'Jun', value: 62 },
-          ];
-          setData(fallbackData);
-        } else {
-          setData(jsonData);
-        }
-      } catch (error: unknown) {
-        console.error('Error fetching chart data:', error);
-        const fallbackData = [
-          { label: 'Jan', value: 30 },
-          { label: 'Feb', value: 45 },
-          { label: 'Mar', value: 38 },
-          { label: 'Apr', value: 55 },
-          { label: 'May', value: 48 },
-          { label: 'Jun', value: 62 },
-        ];
-        setData(fallbackData);
-      }
-    };
-    fetchData();
+    fetch(endpoint)
+      .then((res) => {
+        if (!res.ok) throw new Error(`Failed to fetch: ${res.status}`);
+        return res.json();
+      })
+      .then((data) => setData(data));
   }, [endpoint]);
 
   return (

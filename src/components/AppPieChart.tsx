@@ -8,9 +8,8 @@ import {
   ChartTooltipContent,
 } from './ui/chart';
 import { Label, Pie, PieChart } from 'recharts';
-import { Props } from '@/lib/mockData';
 import { useEffect, useState } from 'react';
-import { PieChartData } from '@/lib/type';
+import { PieChartData, PieChartProps } from '@/lib/type';
 
 const chartData = [
   { browser: 'chrome', visitors: 275, fill: 'var(--color-chrome)' },
@@ -46,11 +45,19 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const AppPieChart = ({ title, endpoint }: Props) => {
-  const [data, setData] = useState<PieChartData[]>(chartData);
-  const signUps = data.reduce((acc, cur) => acc + cur.visitors, 0);
+const AppPieChart = ({ title, endpoint }: PieChartProps) => {
+  const [data, setData] = useState<PieChartData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  const signUps = data.reduce((sum, entry) => sum + entry.visitors, 0);
 
   useEffect(() => {
+    if (!endpoint) {
+      setError('No endpoint provided');
+      return;
+    }
+    setLoading(true);
     fetch(endpoint)
       .then((res) => res.json())
       .then((apiData: PieChartData[]) => {
@@ -62,7 +69,7 @@ const AppPieChart = ({ title, endpoint }: Props) => {
         setData(transformedData);
       })
       .catch((error) => {
-        console.error('Error fetching pie chart data:', error);
+        console.error('Error fetching pie chart data', error);
       });
   }, [endpoint]);
 

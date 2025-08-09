@@ -32,10 +32,14 @@ const chartConfig = {
 
 const TotalRevenueCard = ({ title, endpoint }: Props) => {
   const [revenue, setRevenue] = useState<RevenueData | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchRevenue = async () => {
+      if (!endpoint) {
+        setError('No endpoint provided');
+        return;
+      }
       try {
         const res = await fetch(endpoint);
         if (!res.ok) {
@@ -45,16 +49,12 @@ const TotalRevenueCard = ({ title, endpoint }: Props) => {
         setRevenue(jsonData);
       } catch (err: unknown) {
         console.error('Error fetching revenue data:', err);
-        setError('Failed to load revenue data');
       }
     };
 
     fetchRevenue();
   }, [endpoint]);
 
-  if (error) {
-    return <div>{error}</div>;
-  }
   if (!revenue) {
     return <div>Loading...</div>;
   }

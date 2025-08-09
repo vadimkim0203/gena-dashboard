@@ -1,4 +1,11 @@
-export type ChartType = 'number' | 'line' | 'bar' | 'pie';
+export type ChartType =
+  | 'number'
+  | 'line'
+  | 'bar'
+  | 'pie'
+  | 'value'
+  | 'area'
+  | 'stacked';
 
 export interface Chart {
   id: string;
@@ -27,7 +34,8 @@ export interface RevenueData {
 
 export interface Props {
   title?: string;
-  endpoint: string;
+  endpoint?: string;
+  data: any[];
 }
 
 export interface DashboardPageProps {

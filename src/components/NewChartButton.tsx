@@ -13,8 +13,31 @@ const NewChartButton = ({ dashboardId }: { dashboardId: string }) => {
   const handleCreateChart = async (data: {
     title: string;
     type: ChartType;
+    rawData?: any[];
   }) => {
     try {
+      let dataEndpoint = `/api/data/${data.type}`;
+
+      if (data.rawData && data.rawData.length > 0) {
+        const dataRes = await fetch('/api/data', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            data: data.rawData,
+            name: `custom_${Date.now()}`,
+          }),
+        });
+
+        if (!dataRes.ok) {
+          throw new Error('Failed to store chart data');
+        }
+
+        const dataResult = await dataRes.json();
+        dataEndpoint = dataResult.endpoint;
+      }
+
       const res = await fetch('/api/charts', {
         method: 'POST',
         headers: {
@@ -24,7 +47,7 @@ const NewChartButton = ({ dashboardId }: { dashboardId: string }) => {
           dashboardId,
           type: data.type,
           title: data.title,
-          dataEndpoint: `/api/data/${data.type}`, 
+          dataEndpoint,
           order: Date.now(),
         }),
       });

@@ -38,7 +38,7 @@ import Logo from './Logo';
 const items = [
   {
     title: 'Home',
-    url: '#',
+    url: '/',
     icon: Home,
   },
   {

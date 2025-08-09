@@ -1,6 +1,6 @@
 # Gena Dashboard Frontend
 
-This is the **Gena Dashboard** frontend project.
+**Gena Dashboard** is a frontend project designed to present business data in a clear and interactive way. The main goal of this assignment was to build a dashboard that displays various statistics, enabling users to analyze information and make informed business decisions.
 
 ## Live Demo
 

@@ -110,6 +110,11 @@ const DashboardList = () => {
                   <input
                     value={editName}
                     onChange={(e) => setEditName(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        handleRename(dashboard.id);
+                      }
+                    }}
                     className="bg-transparent border-b border-gray-300 outline-none text-sm flex-1"
                   />
                   <Button
