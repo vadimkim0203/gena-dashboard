@@ -1,7 +1,8 @@
+import { CustomData } from '@/lib/type';
 import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
 
-const customDataStore = new Map<string, any[]>();
+const customDataStore = new Map<string, CustomData[]>();
 
 export async function POST(request: NextRequest) {
   try {
@@ -23,7 +24,7 @@ export async function POST(request: NextRequest) {
       endpoint: `/api/data/${dataId}`,
       id: dataId,
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Failed to store data' },
       { status: 500 },

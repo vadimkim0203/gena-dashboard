@@ -11,14 +11,6 @@ import { Label, Pie, PieChart } from 'recharts';
 import { useEffect, useState } from 'react';
 import { PieChartData, PieChartProps } from '@/lib/type';
 
-const chartData = [
-  { browser: 'chrome', visitors: 275, fill: 'var(--color-chrome)' },
-  { browser: 'safari', visitors: 200, fill: 'var(--color-safari)' },
-  { browser: 'firefox', visitors: 287, fill: 'var(--color-firefox)' },
-  { browser: 'edge', visitors: 173, fill: 'var(--color-edge)' },
-  { browser: 'other', visitors: 190, fill: 'var(--color-other)' },
-];
-
 const chartConfig = {
   visitors: {
     label: 'Visitors',
@@ -76,54 +68,59 @@ const AppPieChart = ({ title, endpoint }: PieChartProps) => {
   return (
     <div className="">
       <h1 className="text-lg font-medium mb-6">{title}</h1>
-      <ChartContainer
-        config={chartConfig}
-        className="mx-auto aspect-square max-h-[250px]"
-      >
-        <PieChart>
-          <ChartTooltip
-            cursor={false}
-            content={<ChartTooltipContent hideLabel />}
-          />
-          <Pie
-            data={data}
-            dataKey="visitors"
-            nameKey="browser"
-            innerRadius={60}
-            strokeWidth={5}
-          >
-            <Label
-              content={({ viewBox }) => {
-                if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
-                  return (
-                    <text
-                      x={viewBox.cx}
-                      y={viewBox.cy}
-                      textAnchor="middle"
-                      dominantBaseline="middle"
-                    >
-                      <tspan
+      {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
+      {loading ? (
+        <p className="text-sm text-muted-foreground">Loading...</p>
+      ) : (
+        <ChartContainer
+          config={chartConfig}
+          className="mx-auto aspect-square max-h-[250px]"
+        >
+          <PieChart>
+            <ChartTooltip
+              cursor={false}
+              content={<ChartTooltipContent hideLabel />}
+            />
+            <Pie
+              data={data}
+              dataKey="visitors"
+              nameKey="browser"
+              innerRadius={60}
+              strokeWidth={5}
+            >
+              <Label
+                content={({ viewBox }) => {
+                  if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
+                    return (
+                      <text
                         x={viewBox.cx}
                         y={viewBox.cy}
-                        className="fill-foreground text-3xl font-bold"
+                        textAnchor="middle"
+                        dominantBaseline="middle"
                       >
-                        {signUps.toLocaleString()}
-                      </tspan>
-                      <tspan
-                        x={viewBox.cx}
-                        y={(viewBox.cy || 0) + 24}
-                        className="fill-muted-foreground"
-                      >
-                        Visitors
-                      </tspan>
-                    </text>
-                  );
-                }
-              }}
-            />
-          </Pie>
-        </PieChart>
-      </ChartContainer>
+                        <tspan
+                          x={viewBox.cx}
+                          y={viewBox.cy}
+                          className="fill-foreground text-3xl font-bold"
+                        >
+                          {signUps.toLocaleString()}
+                        </tspan>
+                        <tspan
+                          x={viewBox.cx}
+                          y={(viewBox.cy || 0) + 24}
+                          className="fill-muted-foreground"
+                        >
+                          Visitors
+                        </tspan>
+                      </text>
+                    );
+                  }
+                }}
+              />
+            </Pie>
+          </PieChart>
+        </ChartContainer>
+      )}
       <div className="mt-4 flex flex-fol gap-2 items-center">
         <div className="flex items-center gap-2 leading-none font-medium">
           Trending up by 5.2% this month{' '}

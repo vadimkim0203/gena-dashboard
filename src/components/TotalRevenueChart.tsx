@@ -63,6 +63,7 @@ const TotalRevenueCard = ({ title, endpoint }: Props) => {
 
   return (
     <Card className="flex flex-col">
+      {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
       <CardHeader className="items-center pb-0">
         <CardTitle>{title}</CardTitle>
         <CardDescription>{revenue.label}</CardDescription>

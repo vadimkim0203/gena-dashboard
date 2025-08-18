@@ -1,8 +1,6 @@
-import { v4 as uuidv4 } from 'uuid';
+import { AreaChartData, PieChartData } from './type';
 
-export interface ChartDataEntry {
-  [key: string]: any;
-}
+export type ChartDataEntry = AreaChartData | PieChartData;
 
 export const customDataStore = new Map<string, ChartDataEntry[]>();
 

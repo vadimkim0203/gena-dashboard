@@ -3,10 +3,11 @@ import AppPieChart from './AppPieChart';
 import AppAreaChart from './AppAreaChart';
 import AppBarChart from './AppBarChart';
 import { AppStackedChart } from './AppStackedChart';
+import { ChartData } from '@/lib/type';
 
 export type ChartPreviewProps = {
   type: ChartType;
-  data: any[];
+  data: ChartData[];
   title: string;
 };
 

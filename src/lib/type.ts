@@ -17,14 +17,17 @@ export interface NewDashboardButtonProps {
 export interface NewChartDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSubmit: (data: { title: string; type: ChartType; rawData?: any[] }) => void;
+  onSubmit: (data: {
+    title: string;
+    type: ChartType;
+    rawData?: unknown[];
+  }) => void;
   dashboardId?: string;
 }
 
 export type PieChartData = {
   browser: string;
   visitors: number;
-  fill: string;
 };
 
 export type PieChartProps = {
@@ -38,3 +41,22 @@ export type PieChartProps = {
   totalValue?: string;
   endpoint?: string | URL;
 };
+
+export type CustomData = Record<string, unknown>;
+
+export type ChartData = {
+  name: string;
+  value: number;
+  color: string;
+  [key: string]: unknown;
+};
+
+export type RawDataItem = { [key: string]: string | number | boolean };
+
+export interface AreaChartData {
+  month: string;
+  desktop: number;
+  mobile: number;
+}
+
+export type ChartDataEntry = AreaChartData | PieChartData;

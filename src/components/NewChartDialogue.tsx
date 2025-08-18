@@ -7,7 +7,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { ChartType } from '@/lib/mockData';
-import { NewChartDialogProps } from '@/lib/type';
+import { ChartData, NewChartDialogProps } from '@/lib/type';
 import chartTypeAnalyzer from '@/lib/chartTypeAnalyzer';
 import ChartPreview from './ChartPreview';
 
@@ -18,7 +18,7 @@ export function NewChartDialog({
 }: NewChartDialogProps) {
   const [title, setTitle] = useState('');
   const [rawDataInput, setRawDataInput] = useState('');
-  const [parsedData, setParsedData] = useState<any[]>([]);
+  const [parsedData, setParsedData] = useState<ChartData[]>([]);
   const [selectedType, setSelectedType] = useState<ChartType>('bar');
   const [step, setStep] = useState<'input' | 'preview'>('input');
   const [error, setError] = useState('');
@@ -35,7 +35,7 @@ export function NewChartDialog({
       setSelectedType(suggestedType);
       setStep('preview');
       setError('');
-    } catch (e) {
+    } catch {
       setError('Invalid JSON data');
     }
   };
@@ -50,6 +50,7 @@ export function NewChartDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
+      {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
           <DialogTitle>

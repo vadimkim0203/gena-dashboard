@@ -1,12 +1,12 @@
 import { customDataStore } from '@/lib/dataStore';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } },
-) {
-  const id = params.id;
+interface Params {
+  params: { id: string };
+}
 
+export async function GET(request: NextRequest, context: Params) {
+  const { id } = context.params;
   if (customDataStore.has(id)) {
     return NextResponse.json(customDataStore.get(id));
   }

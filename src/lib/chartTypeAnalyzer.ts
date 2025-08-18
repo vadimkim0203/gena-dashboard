@@ -1,7 +1,8 @@
 import { ChartType } from './mockData';
+import { ChartData } from './type';
 
 export type DataPoint = {
-  [key: string]: any;
+  [key: string]: ChartData;
 };
 
 export default function chartTypeAnalyzer(data: DataPoint[]): ChartType {

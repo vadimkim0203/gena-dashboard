@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { Plus } from 'lucide-react';
 import { useState } from 'react';
 import { NewChartDialog } from './NewChartDialogue';
-import { ChartType } from '@/lib/mockData';
+import { ChartDataPoint, ChartType } from '@/lib/mockData';
 
 const NewChartButton = ({ dashboardId }: { dashboardId: string }) => {
   const router = useRouter();
@@ -13,7 +13,7 @@ const NewChartButton = ({ dashboardId }: { dashboardId: string }) => {
   const handleCreateChart = async (data: {
     title: string;
     type: ChartType;
-    rawData?: any[];
+    rawData?: ChartDataPoint[];
   }) => {
     try {
       let dataEndpoint = `/api/data/${data.type}`;

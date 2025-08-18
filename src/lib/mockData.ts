@@ -35,7 +35,7 @@ export interface RevenueData {
 export interface Props {
   title?: string;
   endpoint?: string;
-  data: any[];
+  data: unknown[];
 }
 
 export interface DashboardPageProps {

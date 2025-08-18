@@ -44,6 +44,7 @@ const AppAreaChart = ({ title, endpoint }: Props) => {
   return (
     <div className="">
       <h1 className="text-lg font-medium mb-6">{title}</h1>
+      {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
       <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
         <AreaChart accessibilityLayer data={data}>
           <CartesianGrid vertical={false} />
